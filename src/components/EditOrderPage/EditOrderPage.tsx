@@ -199,7 +199,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
             <div className="card border shadow-none">
               <div className="card-header bg-transparent border-bottom py-3 px-4">
                 <h5 className="font-size-16 mb-0">
-                  Order Summary <span className="float-end">#MN0124</span>
+                  Order Summary <span className="float-end">#{order.id}</span>
                 </h5>
               </div>
               <div className="card-body p-4 pt-2">
