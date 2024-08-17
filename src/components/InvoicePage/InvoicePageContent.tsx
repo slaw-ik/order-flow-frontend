@@ -1,5 +1,7 @@
 import React from 'react';
 import { OrderStructure } from '../../features/orders/orderDTOs';
+import { prettifyDate } from '../../utils/dateTime';
+import { fullAddress } from '../../features/clients/helpers';
 
 import './styles.scss';
 
@@ -27,10 +29,10 @@ const InvoicePageContent = ({ order }: OrderProps) => {
                     <div className="col-sm-6 text-end">
                       <div className="btn-group print-button">
                         <button className="btn btn-outline-primary" onClick={() => window.print()}>
-                          <i className="bi bi-printer"></i> Print
+                          Print <i className="bi bi-printer" />
                         </button>
                         <a href={`/orders/${order.id}`} className="btn btn-outline-danger">
-                          <i className="bi bi-box-arrow-left"></i> Back
+                          Back <i className="bi bi-box-arrow-left" />
                         </a>
                       </div>
                     </div>
@@ -42,20 +44,20 @@ const InvoicePageContent = ({ order }: OrderProps) => {
                     <address>
                       <strong>Shipped To:</strong>
                       <br />
-                      Twitter, Inc.
+                      {order.client?.nickname}
                       <br />
-                      795 Folsom Ave, Suite 600
+                      {order.client?.firstName} {order.client?.lastName}
                       <br />
-                      San Francisco, CA 94107
+                      {fullAddress(order)}
                       <br />
-                      <abbr title="Phone">P:</abbr> (123) 456-7890
+                      Tel.: {order.phone}
                     </address>
                   </div>
                   <div className="col-sm-6 text-end">
                     <address>
                       <strong>Order Date:</strong>
                       <br />
-                      {order.createdAt}
+                      {prettifyDate(order.createdAt)}
                       <br />
                       <br />
                     </address>
