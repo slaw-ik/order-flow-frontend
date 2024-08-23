@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { createOrder, fetchOrder } from './orderAPI';
+import { createOrder, fetchOrder, updateOrder } from './orderAPI';
 import { Statuses } from '../API';
 import { OrderItemStructure } from '../orderItems/orderItemDTOs';
 import { OrderStructure } from './orderDTOs';
@@ -41,11 +41,16 @@ export const createOrderAsync = createAsyncThunk(
   async (payload: OrderStructure) => await createOrder(payload)
 );
 
+export const updateOrderAsync = createAsyncThunk(
+  'orders/updateOrder',
+  async (payload: OrderStructure) => await updateOrder(payload)
+);
+
 export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    updateOrder: (state, action: OrderAction) => {
+    updateOrderState: (state, action: OrderAction) => {
       state.order = {
         ...state.order,
         ...action.payload,
@@ -79,11 +84,21 @@ export const orderSlice = createSlice({
       })
       .addCase(createOrderAsync.rejected, (state) => {
         state.status = Statuses.Error;
+      })
+      .addCase(updateOrderAsync.pending, (state) => {
+        state.status = Statuses.Loading;
+      })
+      .addCase(updateOrderAsync.fulfilled, (state, action) => {
+        state.order = action.payload;
+        state.status = Statuses.UpToDate;
+      })
+      .addCase(updateOrderAsync.rejected, (state) => {
+        state.status = Statuses.Error;
       });
   },
 });
 
-export const { updateOrder, updateOrderItems } = orderSlice.actions;
+export const { updateOrderState, updateOrderItems } = orderSlice.actions;
 
 export const selectOrder = (state: RootState) => state.order.order;
 export const selectStatus = (state: RootState) => state.order.status;

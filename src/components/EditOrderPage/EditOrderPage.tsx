@@ -6,7 +6,12 @@ import ItemSearch from '../ItemSearch/ItemSearch';
 import ItemCard from './ItemCard';
 import { useAppSelector } from '../../app/hooks';
 import { ClientStructure } from '../../features/clients/clientDTOs';
-import { fetchOrderAsync, selectOrder, updateOrder, updateOrderItems } from '../../features/orders/orderSlice';
+import {
+  fetchOrderAsync,
+  selectOrder, updateOrderAsync,
+  updateOrderItems,
+  updateOrderState,
+} from '../../features/orders/orderSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import { ItemStructure } from '../../features/items/itemDTOs';
@@ -44,12 +49,10 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
       postCode: client.address?.postCode,
       building: client.address?.building,
       flat: client.address?.flat,
+      client: client,
     };
 
-    console.log('order', order);
-    console.log('ordersUser', ordersUser);
-
-    dispatch(updateOrder(ordersUser));
+    dispatch(updateOrderState(ordersUser));
   };
 
   const handleAdd = (item: OrderItemStructure) => {
@@ -91,12 +94,16 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     });
   };
 
+  const handleUpdateOrder = () => {
+    dispatch(updateOrderAsync(order));
+  };
+
   const totalPrice = () => {
     if (!order.orderItems) {
       return 0;
     }
 
-    return order.orderItems.reduce(function (acc, item) {
+    return order.orderItems.reduce(function(acc, item) {
       return acc + (item.count || 0) * (item.price || 0);
     }, 0);
   };
@@ -112,7 +119,6 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
   }, [order.client]);
 
   useEffect(() => {
-    console.log('fetchOrderAsync');
     dispatch(fetchOrderAsync(id));
   }, []);
 
@@ -181,9 +187,9 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
                         <button
                           className="btn btn-success"
                           disabled={disabledCreateButton}
-                          onClick={() => console.log('cccc')}
+                          onClick={handleUpdateOrder}
                         >
-                          Create
+                          Update
                         </button>
                       </div>
                     </div>
@@ -206,28 +212,28 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
                 <div className="table-responsive">
                   <table className="table mb-0">
                     <tbody>
-                      {/*<tr>*/}
-                      {/*  <td>Sub Total :</td>*/}
-                      {/*  <td className="text-end">$ 780</td>*/}
-                      {/*</tr>*/}
-                      {/*<tr>*/}
-                      {/*  <td>Discount :</td>*/}
-                      {/*  <td className="text-end">- $ 78</td>*/}
-                      {/*</tr>*/}
-                      {/*<tr>*/}
-                      {/*  <td>Shipping Charge :</td>*/}
-                      {/*  <td className="text-end">$ 25</td>*/}
-                      {/*</tr>*/}
-                      {/*<tr>*/}
-                      {/*  <td>Estimated Tax :</td>*/}
-                      {/*  <td className="text-end">$ 18.20</td>*/}
-                      {/*</tr>*/}
-                      <tr className="bg-light">
-                        <th>Total :</th>
-                        <td className="text-end">
-                          <span className="fw-bold">$ {totalPrice()}</span>
-                        </td>
-                      </tr>
+                    {/*<tr>*/}
+                    {/*  <td>Sub Total :</td>*/}
+                    {/*  <td className="text-end">$ 780</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                    {/*  <td>Discount :</td>*/}
+                    {/*  <td className="text-end">- $ 78</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                    {/*  <td>Shipping Charge :</td>*/}
+                    {/*  <td className="text-end">$ 25</td>*/}
+                    {/*</tr>*/}
+                    {/*<tr>*/}
+                    {/*  <td>Estimated Tax :</td>*/}
+                    {/*  <td className="text-end">$ 18.20</td>*/}
+                    {/*</tr>*/}
+                    <tr className="bg-light">
+                      <th>Total :</th>
+                      <td className="text-end">
+                        <span className="fw-bold">$ {totalPrice()}</span>
+                      </td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>

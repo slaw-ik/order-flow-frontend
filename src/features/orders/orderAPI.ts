@@ -46,3 +46,20 @@ export async function createOrder(payload: OrderStructure) {
       return {} as OrdersState;
     });
 }
+
+export async function updateOrder(payload: OrderStructure) {
+  return fetch(`${API_URL}/orders/${payload.id}.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      order: toActiveRecordStructure(payload),
+    }),
+  })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log('Error: ', err);
+      return {} as OrdersState;
+    });
+}

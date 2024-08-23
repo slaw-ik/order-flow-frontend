@@ -6,7 +6,7 @@ import ItemSearch from '../ItemSearch/ItemSearch';
 import ItemCard from './ItemCard';
 import { useAppSelector } from '../../app/hooks';
 import { ClientStructure } from '../../features/clients/clientDTOs';
-import { createOrderAsync, selectOrder, updateOrder, updateOrderItems } from '../../features/orders/orderSlice';
+import { createOrderAsync, selectOrder, updateOrderState, updateOrderItems } from '../../features/orders/orderSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import { ItemStructure } from '../../features/items/itemDTOs';
@@ -44,7 +44,7 @@ const NewOrderPage = () => {
       flat: client.address?.flat,
     };
 
-    dispatch(updateOrder(ordersUser));
+    dispatch(updateOrderState(ordersUser));
   };
 
   const handleAdd = (item: OrderItemStructure) => {
