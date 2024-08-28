@@ -6,7 +6,7 @@ const Navbar = () => {
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <i className="bi bi-bag-heart-fill mx-2"></i>
-          Julia's Store
+          OrderFlow
         </a>
         <button
           className="navbar-toggler collapsed"
