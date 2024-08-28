@@ -57,7 +57,14 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
   };
 
   const handleAdd = (item: OrderItemStructure) => {
-    const orderItems: OrderItemStructure[] = order.orderItems ? [item, ...order.orderItems] : [item];
+    const newItem: OrderItemStructure = {
+      itemId: item.id,
+      count: item.count,
+      price: item.price,
+      item,
+    };
+
+    const orderItems: OrderItemStructure[] = order.orderItems ? [newItem, ...order.orderItems] : [newItem];
 
     dispatch(updateOrderItems(orderItems));
     setTmpItem(null);
@@ -175,6 +182,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
                   order.orderItems.map((item: OrderItemStructure) => (
                     <div className="col-lg-12" key={item.id}>
                       <ItemCard
+                        key={item.itemId}
                         item={item as OrderItemStructure}
                         onDeleteClick={handleDelete}
                         onEditClick={handleEdit}
