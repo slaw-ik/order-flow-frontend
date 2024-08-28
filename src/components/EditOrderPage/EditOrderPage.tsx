@@ -78,7 +78,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     let orderItems: OrderItemStructure[] = [];
 
     if (order.orderItems) {
-      orderItems = order.orderItems.filter((orderItem) => orderItem.id !== item.id);
+      orderItems = order.orderItems.filter((orderItem) => orderItem.itemId !== item.id);
     }
 
     dispatch(updateOrderItems(orderItems));
@@ -88,7 +88,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     let editableItem: OrderItemStructure = item;
 
     order.orderItems?.find((orderItem) => {
-      if (orderItem.id === item.id) {
+      if (orderItem.itemId === item.id) {
         editableItem = orderItem;
       }
     });
