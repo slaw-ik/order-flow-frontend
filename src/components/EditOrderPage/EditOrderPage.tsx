@@ -8,7 +8,8 @@ import { useAppSelector } from '../../app/hooks';
 import { ClientStructure } from '../../features/clients/clientDTOs';
 import {
   fetchOrderAsync,
-  selectOrder, updateOrderAsync,
+  selectOrder,
+  updateOrderAsync,
   updateOrderItems,
   updateOrderState,
 } from '../../features/orders/orderSlice';
@@ -103,7 +104,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
       return 0;
     }
 
-    return order.orderItems.reduce(function(acc, item) {
+    return order.orderItems.reduce(function (acc, item) {
       return acc + (item.count || 0) * (item.price || 0);
     }, 0);
   };
@@ -173,7 +174,11 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
                 {order.orderItems &&
                   order.orderItems.map((item: OrderItemStructure) => (
                     <div className="col-lg-12" key={item.id}>
-                      <ItemCard item={item as ItemStructure} onDeleteClick={handleDelete} onEditClick={handleEdit} />
+                      <ItemCard
+                        item={item as OrderItemStructure}
+                        onDeleteClick={handleDelete}
+                        onEditClick={handleEdit}
+                      />
                     </div>
                   ))}
               </div>
@@ -184,11 +189,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
                     <div className="col-sm-6"></div>
                     <div className="col-sm-6">
                       <div className="text-sm-end mt-2 mt-sm-0">
-                        <button
-                          className="btn btn-success"
-                          disabled={disabledCreateButton}
-                          onClick={handleUpdateOrder}
-                        >
+                        <button className="btn btn-success" disabled={disabledCreateButton} onClick={handleUpdateOrder}>
                           Update
                         </button>
                       </div>
@@ -212,28 +213,28 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
                 <div className="table-responsive">
                   <table className="table mb-0">
                     <tbody>
-                    {/*<tr>*/}
-                    {/*  <td>Sub Total :</td>*/}
-                    {/*  <td className="text-end">$ 780</td>*/}
-                    {/*</tr>*/}
-                    {/*<tr>*/}
-                    {/*  <td>Discount :</td>*/}
-                    {/*  <td className="text-end">- $ 78</td>*/}
-                    {/*</tr>*/}
-                    {/*<tr>*/}
-                    {/*  <td>Shipping Charge :</td>*/}
-                    {/*  <td className="text-end">$ 25</td>*/}
-                    {/*</tr>*/}
-                    {/*<tr>*/}
-                    {/*  <td>Estimated Tax :</td>*/}
-                    {/*  <td className="text-end">$ 18.20</td>*/}
-                    {/*</tr>*/}
-                    <tr className="bg-light">
-                      <th>Total :</th>
-                      <td className="text-end">
-                        <span className="fw-bold">$ {totalPrice()}</span>
-                      </td>
-                    </tr>
+                      {/*<tr>*/}
+                      {/*  <td>Sub Total :</td>*/}
+                      {/*  <td className="text-end">$ 780</td>*/}
+                      {/*</tr>*/}
+                      {/*<tr>*/}
+                      {/*  <td>Discount :</td>*/}
+                      {/*  <td className="text-end">- $ 78</td>*/}
+                      {/*</tr>*/}
+                      {/*<tr>*/}
+                      {/*  <td>Shipping Charge :</td>*/}
+                      {/*  <td className="text-end">$ 25</td>*/}
+                      {/*</tr>*/}
+                      {/*<tr>*/}
+                      {/*  <td>Estimated Tax :</td>*/}
+                      {/*  <td className="text-end">$ 18.20</td>*/}
+                      {/*</tr>*/}
+                      <tr className="bg-light">
+                        <th>Total :</th>
+                        <td className="text-end">
+                          <span className="fw-bold">$ {totalPrice()}</span>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>

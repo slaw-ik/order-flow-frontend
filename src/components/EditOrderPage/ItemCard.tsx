@@ -1,25 +1,28 @@
 import React from 'react';
 import { ItemStructure } from '../../features/items/itemDTOs';
+import { OrderItemStructure } from '../../features/orderItems/orderItemDTOs';
 
 import './ItemCard.scss';
 
 interface ItemCardProps {
-  item: ItemStructure;
+  item: OrderItemStructure;
   onDeleteClick?: (item: ItemStructure) => void;
   onEditClick?: (item: ItemStructure) => void;
 }
 
-const ItemCard = ({ item, onDeleteClick, onEditClick }: ItemCardProps) => {
+const ItemCard = ({ item: orderItem, onDeleteClick, onEditClick }: ItemCardProps) => {
+  const item = orderItem.item;
+
   const handleDelete = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (onDeleteClick) {
+    if (onDeleteClick && item) {
       onDeleteClick(item);
     }
   };
 
   const handleEdit = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (onEditClick) {
+    if (onEditClick && item) {
       onEditClick(item);
     }
   };
@@ -35,12 +38,12 @@ const ItemCard = ({ item, onDeleteClick, onEditClick }: ItemCardProps) => {
             <div>
               <h5 className="text-truncate font-size-18">
                 <a href="#" className="text-dark">
-                  {item.name}
+                  {item && item.name}
                 </a>
               </h5>
 
               <p className="mb-0 mt-1">
-                Description : <span>{item.description}</span>
+                Description : <span>{item && item.description}</span>
               </p>
             </div>
           </div>
@@ -65,21 +68,21 @@ const ItemCard = ({ item, onDeleteClick, onEditClick }: ItemCardProps) => {
             <div className="col-md-4">
               <div className="mt-3">
                 <p className="text-muted mb-2">Price</p>
-                <h5 className="mb-0 mt-2">${item.price}</h5>
+                <h5 className="mb-0 mt-2">${orderItem.price}</h5>
               </div>
             </div>
             <div className="col-md-5">
               <div className="mt-3">
                 <p className="text-muted mb-2">Quantity</p>
                 <div className="d-inline-flex col-md-5">
-                  <input type="number" className="form-control" value={item.count} disabled={true} />
+                  <input type="number" className="form-control" value={orderItem.count} disabled={true} />
                 </div>
               </div>
             </div>
             <div className="col-md-3">
               <div className="mt-3">
                 <p className="text-muted mb-2">Total</p>
-                <h5>${(item.price || 0) * (item.count || 1)}</h5>
+                <h5>${(orderItem.price || 0) * (orderItem.count || 1)}</h5>
               </div>
             </div>
           </div>
