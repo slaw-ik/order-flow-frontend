@@ -23,6 +23,8 @@ import './styles.scss';
 import { selectClient, setClient } from '../../features/clients/clientSlice';
 import { fullAddress } from '../../features/clients/helpers';
 import { OrderStructure } from '../../features/orders/orderDTOs';
+import { useNavigate } from 'react-router-dom';
+import { multiplyAndFormat } from '../../utils/numbers';
 
 interface EditOrderPageProps {
   id: string;
@@ -30,6 +32,8 @@ interface EditOrderPageProps {
 
 const EditOrderPage = ({ id }: EditOrderPageProps) => {
   const ref: LegacyRef<HTMLDivElement> = useRef(null);
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState(0);
   const [tmpItem, setTmpItem] = useState<ItemStructure | null>(null);
   const [disabledCreateButton, setDisabledCreateButton] = useState(true);
@@ -74,7 +78,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     setTmpItem(null);
   };
 
-  const handleDelete = (item: OrderItemStructure) => {
+  const handleDelete = (item: ItemStructure) => {
     let orderItems: OrderItemStructure[] = [];
 
     if (order.orderItems) {
@@ -84,18 +88,9 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     dispatch(updateOrderItems(orderItems));
   };
 
-  const handleEdit = (item: OrderItemStructure) => {
-    let editableItem: OrderItemStructure = item;
-
-    order.orderItems?.find((orderItem) => {
-      if (orderItem.itemId === item.id) {
-        editableItem = orderItem;
-      }
-    });
-
-    setTmpItem(editableItem as ItemStructure);
-
-    handleDelete(editableItem);
+  const handleEdit = (item: ItemStructure) => {
+    setTmpItem(item);
+    handleDelete(item);
 
     ref.current?.scrollIntoView({
       behavior: 'smooth',
@@ -103,7 +98,9 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
   };
 
   const handleUpdateOrder = () => {
-    dispatch(updateOrderAsync(order));
+    dispatch(updateOrderAsync(order)).then(() => {
+      navigate(`/orders/${order.id}`);
+    });
   };
 
   const totalPrice = () => {
@@ -112,7 +109,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     }
 
     return order.orderItems.reduce(function (acc, item) {
-      return acc + (item.count || 0) * (item.price || 0);
+      return acc + multiplyAndFormat(item.count || 0, item.price || 0);
     }, 0);
   };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { ItemStructure } from '../../features/items/itemDTOs';
 
 import './ItemCard.scss';
+import { multiplyAndFormat } from '../../utils/numbers';
 
 interface ItemCardProps {
   item: ItemStructure;
@@ -79,7 +80,7 @@ const ItemCard = ({ item, onDeleteClick, onEditClick }: ItemCardProps) => {
             <div className="col-md-3">
               <div className="mt-3">
                 <p className="text-muted mb-2">Total</p>
-                <h5>${(item.price || 0) * (item.count || 1)}</h5>
+                <h5>${multiplyAndFormat(item.price || 0, item.count || 1)}</h5>
               </div>
             </div>
           </div>

@@ -18,6 +18,7 @@ import { selectClient } from '../../features/clients/clientSlice';
 import { fullAddress } from '../../features/clients/helpers';
 import { useNavigate } from 'react-router-dom';
 import { OrderStructure } from '../../features/orders/orderDTOs';
+import { multiplyAndFormat } from '../../utils/numbers';
 
 const NewOrderPage = () => {
   const ref: LegacyRef<HTMLDivElement> = useRef(null);
@@ -101,7 +102,7 @@ const NewOrderPage = () => {
     }
 
     return order.orderItems.reduce(function (acc, item) {
-      return acc + (item.count || 0) * (item.price || 0);
+      return acc + multiplyAndFormat(item.count || 0, item.price || 0);
     }, 0);
   };
 
