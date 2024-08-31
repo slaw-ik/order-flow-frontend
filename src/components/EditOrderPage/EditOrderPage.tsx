@@ -35,7 +35,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState(0);
-  const [tmpItem, setTmpItem] = useState<ItemStructure | null>(null);
+  const [tmpItem, setTmpItem] = useState<OrderItemStructure | null>(null);
   const [disabledCreateButton, setDisabledCreateButton] = useState(true);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -88,9 +88,9 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     dispatch(updateOrderItems(orderItems));
   };
 
-  const handleEdit = (item: ItemStructure) => {
-    setTmpItem(item);
-    handleDelete(item);
+  const handleEdit = (orderItem: OrderItemStructure) => {
+    setTmpItem(orderItem);
+    handleDelete(orderItem.item!);
 
     ref.current?.scrollIntoView({
       behavior: 'smooth',

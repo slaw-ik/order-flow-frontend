@@ -23,8 +23,8 @@ const ItemCard = ({ item: orderItem, onDeleteClick, onEditClick }: ItemCardProps
 
   const handleEdit = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (onEditClick && item) {
-      onEditClick(item);
+    if (onEditClick) {
+      onEditClick(orderItem);
     }
   };
 

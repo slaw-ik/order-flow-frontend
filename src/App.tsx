@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Home from './pages/Home';
 import OrderShow from './pages/OrderShow';
 import OrderEdit from './pages/OrderEdit';
 import OrderIndex from './components/OrderIndex/OrderIndex';
@@ -19,7 +18,7 @@ import Invoice from './pages/Invoice';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <OrderIndex />,
   },
   {
     path: '/orders/:id',
