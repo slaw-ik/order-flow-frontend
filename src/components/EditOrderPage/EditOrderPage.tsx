@@ -35,7 +35,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState(0);
-  const [tmpItem, setTmpItem] = useState<OrderItemStructure | null>(null);
+  const [tmpOrderItem, setTmpOrderItem] = useState<OrderItemStructure | null>(null);
   const [disabledCreateButton, setDisabledCreateButton] = useState(true);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -60,22 +60,18 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     dispatch(updateOrderState(ordersUser));
   };
 
-  const handleAdd = (item: OrderItemStructure) => {
-    const newItem: OrderItemStructure = {
-      itemId: item.id,
-      count: item.count,
-      price: item.price,
-      item,
-    };
+  const handleAdd = (orderItem: OrderItemStructure) => {
+    const { itemId, count, price, item } = orderItem;
+    const newOrderItem: OrderItemStructure = { itemId, count, price, item };
 
-    const orderItems: OrderItemStructure[] = order.orderItems ? [newItem, ...order.orderItems] : [newItem];
+    const orderItems: OrderItemStructure[] = order.orderItems ? [newOrderItem, ...order.orderItems] : [newOrderItem];
 
     dispatch(updateOrderItems(orderItems));
-    setTmpItem(null);
+    setTmpOrderItem(null);
   };
 
   const handleCancel = () => {
-    setTmpItem(null);
+    setTmpOrderItem(null);
   };
 
   const handleDelete = (item: ItemStructure) => {
@@ -89,7 +85,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
   };
 
   const handleEdit = (orderItem: OrderItemStructure) => {
-    setTmpItem(orderItem);
+    setTmpOrderItem(orderItem);
     handleDelete(orderItem.item!);
 
     ref.current?.scrollIntoView({
@@ -108,7 +104,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
       return 0;
     }
 
-    return order.orderItems.reduce(function (acc, item) {
+    return order.orderItems.reduce((acc, item) => {
       return acc + multiplyAndFormat(item.count || 0, item.price || 0);
     }, 0);
   };
@@ -168,7 +164,9 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
 
               <div className="row">
                 <div className="col-lg-12">
-                  {tmpItem && <TmpItemCard item={tmpItem} onAddClick={handleAdd} onCancelClick={handleCancel} />}
+                  {tmpOrderItem && (
+                    <TmpItemCard item={tmpOrderItem} onAddClick={handleAdd} onCancelClick={handleCancel} />
+                  )}
                 </div>
               </div>
 
@@ -176,11 +174,11 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
 
               <div className="row">
                 {order.orderItems &&
-                  order.orderItems.map((item: OrderItemStructure) => (
-                    <div className="col-lg-12" key={item.id}>
+                  order.orderItems.map((orderItem: OrderItemStructure) => (
+                    <div className="col-lg-12" key={orderItem.itemId}>
                       <ItemCard
-                        key={item.itemId}
-                        item={item as OrderItemStructure}
+                        key={orderItem.itemId}
+                        item={orderItem as OrderItemStructure}
                         onDeleteClick={handleDelete}
                         onEditClick={handleEdit}
                       />

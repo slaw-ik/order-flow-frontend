@@ -83,7 +83,6 @@ const ItemCard = ({ item: orderItem, onDeleteClick, onEditClick }: ItemCardProps
             <div className="col-md-3">
               <div className="mt-3">
                 <p className="text-muted mb-2">Total</p>
-                <h5>${(orderItem.price || 0) * (orderItem.count || 1)}</h5>
                 <h5>${multiplyAndFormat(orderItem.price || 0, orderItem.count || 1)}</h5>
               </div>
             </div>
