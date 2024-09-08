@@ -93,6 +93,21 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
     });
   };
 
+  const handleItemSelected = (item: ItemStructure) => {
+    const orderItem = order.orderItems && order.orderItems.find((orderItem) => orderItem.itemId === item.id);
+
+    if (orderItem) {
+      handleEdit(orderItem);
+    } else {
+      setTmpOrderItem({
+        itemId: item.id,
+        count: 1,
+        price: item.price,
+        item,
+      });
+    }
+  };
+
   const handleUpdateOrder = () => {
     dispatch(updateOrderAsync(order)).then(() => {
       navigate(`/orders/${order.id}`);
@@ -159,7 +174,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
           <div className={`row ${activeTab !== 1 && 'visually-hidden'}`}>
             <div className="col-lg-12">
               <div className="row mb-3" ref={ref}>
-                <ItemSearch onItemSelect={handleEdit} />
+                <ItemSearch onItemSelect={handleItemSelected} />
               </div>
 
               <div className="row">
