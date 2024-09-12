@@ -2,6 +2,7 @@ import React from 'react';
 import OrderItem from './OrderItem';
 import { OrderItemStructure } from '../../features/orderItems/orderItemDTOs';
 import { OrderStructure } from '../../features/orders/orderDTOs';
+import OrderStateSelect from '../OrderStateSelect/OrderStateSelect';
 
 type OrderProps = {
   order: OrderStructure;
@@ -21,7 +22,10 @@ const OrderPageContent = ({ order }: OrderProps) => {
               <div className="row ">
                 <div className="col-lg-12 justify-content-between d-flex">
                   <h5>Order #{order.id}</h5>
-                  <div>
+                  <div className="d-sm-flex">
+                    <div className="me-3">
+                      <OrderStateSelect value={order.state!} onChange={(e) => console.log(e.target.value)} />
+                    </div>
                     <a className="btn btn-outline-primary me-3" href={`/orders/${order.id}/invoice`}>
                       <i className="bi bi-printer pe-2"></i>
                       Invoice
