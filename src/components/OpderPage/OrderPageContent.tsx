@@ -3,12 +3,16 @@ import OrderItem from './OrderItem';
 import { OrderItemStructure } from '../../features/orderItems/orderItemDTOs';
 import { OrderStructure } from '../../features/orders/orderDTOs';
 import OrderStateSelect from '../OrderStateSelect/OrderStateSelect';
+import { badgeColor } from '../../utils/styles';
+import { prettifyDateTime } from '../../utils/dateTime';
 
 type OrderProps = {
   order: OrderStructure;
 };
 
 const OrderPageContent = ({ order }: OrderProps) => {
+  const disabled = !!order.cancelledAt;
+
   return (
     <>
       <div className="px-2 py-3">
@@ -24,15 +28,26 @@ const OrderPageContent = ({ order }: OrderProps) => {
                   <h5>Order #{order.id}</h5>
                   <div className="d-sm-flex">
                     <div className="me-3">
-                      <OrderStateSelect value={order.state!} onChange={(e) => console.log(e.target.value)} />
+                      <OrderStateSelect
+                        value={order.state!}
+                        onChange={(e) => console.log(e.target.value)}
+                        disabled={disabled}
+                      />
                     </div>
-                    <a className="btn btn-outline-primary me-3" href={`/orders/${order.id}/invoice`}>
+                    <a
+                      className={`btn btn-outline-primary me-3 ${disabled && 'disabled'}`}
+                      href={`/orders/${order.id}/invoice`}
+                    >
                       <i className="bi bi-printer pe-2"></i>
                       Invoice
                     </a>
-                    <a className="btn btn-primary" href={`/orders/${order.id}/edit`}>
+                    <a className={`btn btn-primary me-3 ${disabled && 'disabled'}`} href={`/orders/${order.id}/edit`}>
                       <i className="bi bi-pencil pe-2"></i>
                       Edit
+                    </a>
+                    <a className={`btn btn-danger ${disabled && 'disabled'}`} href="#">
+                      <i className="bi bi-x pe-2"></i>
+                      Cancel
                     </a>
                   </div>
                 </div>
@@ -157,10 +172,10 @@ const OrderPageContent = ({ order }: OrderProps) => {
                       <p className="my-1">{order.postCode}</p>
                     </div>
                     <div className="col-lg-2">
-                      <h6>Satus:</h6>
+                      <h6>State:</h6>
                     </div>
                     <div className="col-lg-4">
-                      <span className="badge text-bg-success">{order.state}</span>
+                      <span className={`badge ${badgeColor(order.state)}`}>{order.state}</span>
                     </div>
                   </div>
                 </div>
@@ -183,11 +198,11 @@ const OrderPageContent = ({ order }: OrderProps) => {
                 <div className="col-lg-11">
                   <div className="d-flex justify-content-between">
                     <p className="">Order placed</p>
-                    <p className="">10.10.2002 11:05</p>
+                    <p className="">{prettifyDateTime(order.createdAt)}</p>
                   </div>
                 </div>
               </div>
-              <div className="row order-progress-item completed">
+              <div className={`row order-progress-item ${order.packedAt && 'completed'}`}>
                 <div className="col-lg-1">
                   <div className="progress-check">
                     <i className="bi bi-check-circle-fill"></i>
@@ -196,11 +211,11 @@ const OrderPageContent = ({ order }: OrderProps) => {
                 <div className="col-lg-11">
                   <div className="d-flex justify-content-between">
                     <p className="">Order packed</p>
-                    <p className="">10.10.2002 19:50</p>
+                    <p className="">{prettifyDateTime(order.packedAt)}</p>
                   </div>
                 </div>
               </div>
-              <div className="row order-progress-item">
+              <div className={`row order-progress-item ${order.shippedAt && 'completed'}`}>
                 <div className="col-lg-1">
                   <div className="progress-check">
                     <i className="bi bi-check-circle-fill"></i>
@@ -209,10 +224,25 @@ const OrderPageContent = ({ order }: OrderProps) => {
                 <div className="col-lg-11">
                   <div className="d-flex justify-content-between">
                     <p className="">Order sent</p>
-                    <p className="">11.10.2002 09:50</p>
+                    <p className="">{prettifyDateTime(order.shippedAt)}</p>
                   </div>
                 </div>
               </div>
+              {order.cancelledAt && (
+                <div className={`row order-progress-item ${order.cancelledAt && 'cancelled'}`}>
+                  <div className="col-lg-1">
+                    <div className="progress-check">
+                      <i className="bi bi-x-circle-fill"></i>
+                    </div>
+                  </div>
+                  <div className="col-lg-11">
+                    <div className="d-flex justify-content-between">
+                      <p className="">Order cancelled</p>
+                      <p className="">{prettifyDateTime(order.cancelledAt)}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

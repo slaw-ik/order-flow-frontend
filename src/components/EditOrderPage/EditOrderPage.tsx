@@ -55,6 +55,7 @@ const EditOrderPage = ({ id }: EditOrderPageProps) => {
       building: client.address?.building,
       flat: client.address?.flat,
       client: client,
+      state: 'pending',
     };
 
     dispatch(updateOrderState(ordersUser));

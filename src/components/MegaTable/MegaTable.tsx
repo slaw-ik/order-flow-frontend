@@ -15,7 +15,7 @@ interface MegaTableProps {
   onPageChanges: (page: number) => void;
   status: string;
   dataStructure: DataStructure[];
-  customRow?: (record: BaseRecord) => JSX.Element;
+  customRow?: (record: any) => JSX.Element;
   showActions?: ShowActions;
 }
 
@@ -30,7 +30,7 @@ export interface DataStructure {
 }
 
 export interface BaseRecord {
-  id: number;
+  [key: string]: any;
 }
 
 const MegaTable = ({

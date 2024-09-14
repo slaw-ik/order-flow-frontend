@@ -3,9 +3,10 @@ import React, { ChangeEvent, useState } from 'react';
 interface OrderStateSelectProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  disabled?: boolean;
 }
 
-const OrderStateSelect = ({ value, onChange }: OrderStateSelectProps) => {
+const OrderStateSelect = ({ value, onChange, disabled }: OrderStateSelectProps) => {
   const options = [
     { value: 'pending', label: 'Pending' },
     { value: 'packed', label: 'Packed' },
@@ -20,7 +21,7 @@ const OrderStateSelect = ({ value, onChange }: OrderStateSelectProps) => {
   };
 
   return (
-    <select className="form-select" onChange={handleOnChange} value={selectedValue}>
+    <select className="form-select" disabled={disabled} onChange={handleOnChange} value={selectedValue}>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

@@ -9,7 +9,7 @@ export interface OrderStructure {
   clientId?: number;
   client?: ClientStructure;
   country?: string;
-  state?: string;
+  state: string;
   note?: string;
   phone?: string;
   city?: string;
@@ -20,6 +20,9 @@ export interface OrderStructure {
   flat?: string;
   fullAddress?: string;
   createdAt?: string;
+  packedAt?: string;
+  shippedAt?: string;
+  cancelledAt?: string;
 }
 
 export interface OrderActiveRecordStructure {

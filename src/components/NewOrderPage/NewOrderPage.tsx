@@ -43,6 +43,7 @@ const NewOrderPage = () => {
       postCode: client.address?.postCode,
       building: client.address?.building,
       flat: client.address?.flat,
+      state: 'pending',
     };
 
     dispatch(updateOrderState(ordersUser));

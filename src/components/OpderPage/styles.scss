@@ -55,6 +55,18 @@
       }
     }
 
+    &.cancelled {
+      .progress-check {
+        &:after {
+          border-color: #f44336;
+        }
+
+        i {
+          color: #f44336;
+        }
+      }
+    }
+
     &:first-of-type {
       .progress-check {
         &:after {

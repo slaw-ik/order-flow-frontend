@@ -3,11 +3,10 @@ import { prettifyDate } from '../../utils/dateTime';
 import Actions from '../MegaTable/Actions';
 import { OrderStructure } from '../../features/orders/orderDTOs';
 import { useNavigate } from 'react-router-dom';
+import { badgeColor } from '../../utils/styles';
 
 interface OrderProps {
-  record: OrderStructure & {
-    id: number;
-  };
+  record: OrderStructure;
 }
 
 const Order = ({ record }: OrderProps) => {
@@ -26,7 +25,7 @@ const Order = ({ record }: OrderProps) => {
       <td>{id}</td>
       <td> {client?.name} </td>
       <td>
-        <span className="badge badge-soft-success mb-0">{state}</span>
+        <span className={`badge ${badgeColor(state)} mb-0`}>{state}</span>
       </td>
       <td>{client?.nickname}</td>
       <td>{total}</td>

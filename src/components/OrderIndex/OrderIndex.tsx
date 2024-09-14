@@ -10,6 +10,7 @@ import MegaTable, { BaseRecord } from '../MegaTable/MegaTable';
 
 import './styles.css';
 import Order from './Order';
+import { OrderStructure } from '../../features/orders/orderDTOs';
 
 const OrderIndex = () => {
   const orders = useAppSelector(selectOrders);
@@ -77,7 +78,7 @@ const OrderIndex = () => {
             style: { width: '200px' },
           },
         ]}
-        customRow={(record: BaseRecord) => <Order key={record.id} record={record} />}
+        customRow={(record: OrderStructure) => <Order key={record.id} record={record} />}
       />
     </div>
   );

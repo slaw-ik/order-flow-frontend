@@ -23,7 +23,7 @@ const initialState: OrdersState = {
       {
         id: 0,
         country: '',
-        status: 'pending',
+        state: 'pending',
       },
     ],
     page: 1,
