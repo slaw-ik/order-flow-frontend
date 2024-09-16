@@ -5,6 +5,9 @@ import { OrderStructure } from '../../features/orders/orderDTOs';
 import OrderStateSelect from '../OrderStateSelect/OrderStateSelect';
 import { badgeColor } from '../../utils/styles';
 import { prettifyDateTime } from '../../utils/dateTime';
+import { AppDispatch } from '../../app/store';
+import { useDispatch } from 'react-redux';
+import { changeOrderStateAsync } from '../../features/orders/orderSlice';
 
 type OrderProps = {
   order: OrderStructure;
@@ -12,6 +15,21 @@ type OrderProps = {
 
 const OrderPageContent = ({ order }: OrderProps) => {
   const disabled = !!order.cancelledAt;
+  const shipped = !!order.shippedAt;
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleOrderStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (order.state === e.target.value) return;
+    if (order.id) {
+      dispatch(changeOrderStateAsync({ orderId: order.id.toString(), state: e.target.value }));
+    }
+  };
+
+  const cancelOrder = () => {
+    if (order.id) {
+      dispatch(changeOrderStateAsync({ orderId: order.id.toString(), state: 'cancelled' }));
+    }
+  };
 
   return (
     <>
@@ -27,13 +45,11 @@ const OrderPageContent = ({ order }: OrderProps) => {
                 <div className="col-lg-12 justify-content-between d-flex">
                   <h5>Order #{order.id}</h5>
                   <div className="d-sm-flex">
-                    <div className="me-3">
-                      <OrderStateSelect
-                        value={order.state!}
-                        onChange={(e) => console.log(e.target.value)}
-                        disabled={disabled}
-                      />
-                    </div>
+                    {!disabled && !shipped && (
+                      <div className="me-3">
+                        <OrderStateSelect value={order.state!} onChange={handleOrderStateChange} />
+                      </div>
+                    )}
                     <a
                       className={`btn btn-outline-primary me-3 ${disabled && 'disabled'}`}
                       href={`/orders/${order.id}/invoice`}
@@ -41,14 +57,21 @@ const OrderPageContent = ({ order }: OrderProps) => {
                       <i className="bi bi-printer pe-2"></i>
                       Invoice
                     </a>
-                    <a className={`btn btn-primary me-3 ${disabled && 'disabled'}`} href={`/orders/${order.id}/edit`}>
-                      <i className="bi bi-pencil pe-2"></i>
-                      Edit
-                    </a>
-                    <a className={`btn btn-danger ${disabled && 'disabled'}`} href="#">
-                      <i className="bi bi-x pe-2"></i>
-                      Cancel
-                    </a>
+                    {!shipped && (
+                      <>
+                        <a
+                          className={`btn btn-primary me-3 ${disabled && 'disabled'}`}
+                          href={`/orders/${order.id}/edit`}
+                        >
+                          <i className="bi bi-pencil pe-2"></i>
+                          Edit
+                        </a>
+                        <button className={`btn btn-danger ${disabled && 'disabled'}`} onClick={cancelOrder}>
+                          <i className="bi bi-x pe-2"></i>
+                          Cancel
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

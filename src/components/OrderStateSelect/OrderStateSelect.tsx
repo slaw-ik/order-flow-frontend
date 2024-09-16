@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
+import { orderStates } from '../../features/orders/orderDTOs';
 
 interface OrderStateSelectProps {
   value: string;
@@ -7,11 +8,10 @@ interface OrderStateSelectProps {
 }
 
 const OrderStateSelect = ({ value, onChange, disabled }: OrderStateSelectProps) => {
-  const options = [
-    { value: 'pending', label: 'Pending' },
-    { value: 'packed', label: 'Packed' },
-    { value: 'shipped', label: 'Shipped' },
-  ];
+  const options = orderStates.slice(0, -1).map((state) => ({
+    value: state,
+    label: state.charAt(0).toUpperCase() + state.slice(1),
+  }));
 
   const [selectedValue, setSelectedValue] = useState(value);
 

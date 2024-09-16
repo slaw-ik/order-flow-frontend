@@ -1,6 +1,10 @@
 import { OrderItemActiveRecordStructure, OrderItemStructure } from '../orderItems/orderItemDTOs';
 import { ClientStructure } from '../clients/clientDTOs';
 
+export const orderStates = ['pending', 'packed', 'shipped', 'cancelled'];
+
+export type OrderStateType = (typeof orderStates)[number];
+
 export interface OrderStructure {
   id?: number;
   status?: string;

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { createOrder, fetchOrder, updateOrder } from './orderAPI';
+import { changeOrderState, createOrder, fetchOrder, updateOrder } from './orderAPI';
 import { Statuses } from '../API';
 import { OrderItemStructure } from '../orderItems/orderItemDTOs';
 import { OrderStructure } from './orderDTOs';
@@ -44,6 +44,11 @@ export const createOrderAsync = createAsyncThunk(
 export const updateOrderAsync = createAsyncThunk(
   'orders/updateOrder',
   async (payload: OrderStructure) => await updateOrder(payload)
+);
+
+export const changeOrderStateAsync = createAsyncThunk(
+  'orders/changeOrderState',
+  async (payload: { orderId: string; state: string }) => await changeOrderState(payload.orderId, payload.state)
 );
 
 export const orderSlice = createSlice({
@@ -93,6 +98,16 @@ export const orderSlice = createSlice({
         state.status = Statuses.UpToDate;
       })
       .addCase(updateOrderAsync.rejected, (state) => {
+        state.status = Statuses.Error;
+      })
+      .addCase(changeOrderStateAsync.pending, (state) => {
+        state.status = Statuses.Loading;
+      })
+      .addCase(changeOrderStateAsync.fulfilled, (state, action) => {
+        state.order = action.payload;
+        state.status = Statuses.UpToDate;
+      })
+      .addCase(changeOrderStateAsync.rejected, (state) => {
         state.status = Statuses.Error;
       });
   },

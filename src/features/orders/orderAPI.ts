@@ -1,6 +1,6 @@
 import { OrdersState, OrderState } from './ordersSlice';
 import { API_URL } from '../API';
-import { OrderStructure, toActiveRecordStructure } from './orderDTOs';
+import { OrderStateType, OrderStructure, toActiveRecordStructure } from './orderDTOs';
 
 export async function fetchOrders(page: number) {
   return fetch(`${API_URL}/orders.json?page=${page}`, {
@@ -55,6 +55,23 @@ export async function updateOrder(payload: OrderStructure) {
     },
     body: JSON.stringify({
       order: toActiveRecordStructure(payload),
+    }),
+  })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log('Error: ', err);
+      return {} as OrdersState;
+    });
+}
+
+export async function changeOrderState(orderId: string, state: OrderStateType) {
+  return fetch(`${API_URL}/orders/${orderId}/change_state.json`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      state,
     }),
   })
     .then((res) => res.json())
