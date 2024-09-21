@@ -15,60 +15,65 @@ import NewOrder from './pages/NewOrder';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Invoice from './pages/Invoice';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <OrderIndex />,
+    },
+    {
+      path: '/orders/:id',
+      element: <OrderShow />,
+    },
+    {
+      path: '/orders/:id/edit',
+      element: <OrderEdit />,
+    },
+    {
+      path: '/orders',
+      element: <OrderIndex />,
+    },
+    {
+      path: '/orders/new',
+      element: <NewOrder />,
+    },
+    {
+      path: '/orders/:id/invoice',
+      element: <Invoice />,
+    },
+    {
+      path: '/clients',
+      element: <Clients />,
+    },
+    {
+      path: '/clients/:id',
+      element: <Client />,
+    },
+    {
+      path: '/clients/new',
+      element: <Client />,
+    },
+    {
+      path: '/items',
+      element: <Items />,
+    },
+    {
+      path: '/items/:id',
+      element: <Item />,
+    },
+    {
+      path: '/items/new',
+      element: <Item />,
+    },
+    {
+      path: '/items/:id/movements',
+      element: <ItemMovements />,
+    },
+  ],
   {
-    path: '/',
-    element: <OrderIndex />,
-  },
-  {
-    path: '/orders/:id',
-    element: <OrderShow />,
-  },
-  {
-    path: '/orders/:id/edit',
-    element: <OrderEdit />,
-  },
-  {
-    path: '/orders',
-    element: <OrderIndex />,
-  },
-  {
-    path: '/orders/new',
-    element: <NewOrder />,
-  },
-  {
-    path: '/orders/:id/invoice',
-    element: <Invoice />,
-  },
-  {
-    path: '/clients',
-    element: <Clients />,
-  },
-  {
-    path: '/clients/:id',
-    element: <Client />,
-  },
-  {
-    path: '/clients/new',
-    element: <Client />,
-  },
-  {
-    path: '/items',
-    element: <Items />,
-  },
-  {
-    path: '/items/:id',
-    element: <Item />,
-  },
-  {
-    path: '/items/new',
-    element: <Item />,
-  },
-  {
-    path: '/items/:id/movements',
-    element: <ItemMovements />,
-  },
-]);
+    basename: '/order-flow',
+  }
+);
 
 const App = () => (
   <>
