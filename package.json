@@ -1,5 +1,4 @@
 {
-  "homepage": "https://slaw-ik.github.io/order-flow",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -31,8 +30,6 @@
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -57,7 +54,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1",
     "prettier": "^3.2.5"
   }
 }
