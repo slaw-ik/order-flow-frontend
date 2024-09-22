@@ -8,6 +8,7 @@ import { prettifyDateTime } from '../../utils/dateTime';
 import { AppDispatch } from '../../app/store';
 import { useDispatch } from 'react-redux';
 import { changeOrderStateAsync } from '../../features/orders/orderSlice';
+import { MegaLink } from '../MegaLink/MegaLink';
 
 type OrderProps = {
   order: OrderStructure;
@@ -50,22 +51,22 @@ const OrderPageContent = ({ order }: OrderProps) => {
                         <OrderStateSelect value={order.state!} onChange={handleOrderStateChange} />
                       </div>
                     )}
-                    <a
+                    <MegaLink
                       className={`btn btn-outline-primary me-3 ${disabled && 'disabled'}`}
                       href={`/orders/${order.id}/invoice`}
                     >
                       <i className="bi bi-printer pe-2"></i>
                       Invoice
-                    </a>
+                    </MegaLink>
                     {!shipped && (
                       <>
-                        <a
+                        <MegaLink
                           className={`btn btn-primary me-3 ${disabled && 'disabled'}`}
                           href={`/orders/${order.id}/edit`}
                         >
                           <i className="bi bi-pencil pe-2"></i>
                           Edit
-                        </a>
+                        </MegaLink>
                         <button className={`btn btn-danger ${disabled && 'disabled'}`} onClick={cancelOrder}>
                           <i className="bi bi-x pe-2"></i>
                           Cancel

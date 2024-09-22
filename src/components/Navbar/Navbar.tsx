@@ -1,13 +1,14 @@
 import React from 'react';
+import { MegaLink } from '../MegaLink/MegaLink';
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+        <MegaLink className="navbar-brand" href="/">
           <i className="bi bi-bag-heart-fill mx-2"></i>
           OrderFlow
-        </a>
+        </MegaLink>
         <button
           className="navbar-toggler collapsed"
           type="button"
@@ -22,19 +23,19 @@ const Navbar = () => {
         <div className="navbar-collapse collapse" id="navbarCollapse">
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
             <li className="nav-item">
-              <a className="nav-link" href="/orders">
+              <MegaLink className="nav-link" href="/orders">
                 Orders
-              </a>
+              </MegaLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/items">
+              <MegaLink className="nav-link" href="/items">
                 Items
-              </a>
+              </MegaLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/clients">
+              <MegaLink className="nav-link" href="/clients">
                 Clients
-              </a>
+              </MegaLink>
             </li>
           </ul>
         </div>

@@ -14,6 +14,7 @@ import NewOrder from './pages/NewOrder';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Invoice from './pages/Invoice';
+import { BASENAME } from './features/API';
 
 const router = createBrowserRouter(
   [
@@ -71,7 +72,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/order-flow',
+    basename: BASENAME,
   }
 );
 

@@ -34,9 +34,9 @@ const ClientPageContent = ({ client }: ClientProps) => {
     <div className="container">
       <div className="d-flex justify-content-between align-items-lg-center mb-3 flex-column flex-lg-row">
         <h2 className="h5 mb-3 mb-lg-0">
-          <a className="text-muted" onClick={goBack}>
+          <button className="text-muted" onClick={goBack}>
             <i className="bi bi-arrow-left-square me-2" style={{ cursor: 'pointer' }}></i>
-          </a>{' '}
+          </button>{' '}
           Create new customer
         </h2>
         <div className="hstack gap-3">

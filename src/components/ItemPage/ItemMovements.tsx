@@ -1,6 +1,7 @@
 import React from 'react';
 import { prettifyDate } from '../../utils/dateTime';
 import { ItemStructure } from '../../features/items/itemDTOs';
+import { MegaLink } from '../MegaLink/MegaLink';
 
 interface ItemProps {
   item: ItemStructure;
@@ -12,9 +13,9 @@ const ItemMovements = ({ item }: ItemProps) => {
       <div className="card-body">
         <div className="d-flex justify-content-between align-items-lg-center mb-3 flex-column flex-lg-row">
           <h3 className="h6 mb-4">Last 5 movements</h3>
-          <a href={`/items/${item.id}/movements`} className="btn btn-primary align-content-end">
+          <MegaLink href={`/items/${item.id}/movements`} className="btn btn-primary align-content-end">
             Show all
-          </a>
+          </MegaLink>
         </div>
         <div className="table-responsive">
           <table className="table table-hover align-middle">

@@ -4,6 +4,7 @@ import { prettifyDate } from '../../utils/dateTime';
 import { fullAddress } from '../../features/clients/helpers';
 
 import './styles.scss';
+import { MegaLink } from '../MegaLink/MegaLink';
 
 type OrderProps = {
   order: OrderStructure;
@@ -31,9 +32,9 @@ const InvoicePageContent = ({ order }: OrderProps) => {
                         <button className="btn btn-outline-primary" onClick={() => window.print()}>
                           Print <i className="bi bi-printer" />
                         </button>
-                        <a href={`/orders/${order.id}`} className="btn btn-outline-danger">
+                        <MegaLink href={`/orders/${order.id}`} className="btn btn-outline-danger">
                           Back <i className="bi bi-box-arrow-left" />
-                        </a>
+                        </MegaLink>
                       </div>
                     </div>
                   </div>

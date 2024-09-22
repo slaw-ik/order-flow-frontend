@@ -5,6 +5,7 @@ import Content from './Content';
 
 import './styles.scss';
 import Header from './Header';
+import { MegaLink } from '../MegaLink/MegaLink';
 
 interface MegaTableProps {
   resourceName?: string;
@@ -58,9 +59,9 @@ const MegaTable = ({
         <div className="col-md-6">
           <div className="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
             <div>
-              <a href={`/${resource}/new`} className="btn btn-primary">
+              <MegaLink href={`/${resource}/new`} className="btn btn-primary">
                 <i className="bi bi-plus-lg"></i> Add New
-              </a>
+              </MegaLink>
             </div>
           </div>
         </div>
